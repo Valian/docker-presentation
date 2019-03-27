@@ -1,0 +1,32 @@
+About me
+
+Problem definition
+- development environment configuration
+- server resource utilization
+- predictable deployments
+
+Let's focus on the first one
+
+Previous approaches
+- no separation at all, everyone was responsible for preparation and management of his own environment (gif)
+- virtual machines - still not automated, or used Vagrant (iteration cycle, overhead)
+
+It was not perfect - when one person updated something, others had to do it manually on their machines
+Hard & painful onboarding
+Mess when working with multiple projects
+Slow prototyping
+
+
+Docker in one sentence
+> Framework to predictably create and run isolated containers
+
+Container in one sentence
+> A container is a standard unit of software that packages up code and all its dependencies
+
+Hello world - different images like node, python, databases
+
+Concept of a docker image and Dockerfile, examples
+
+Docker-compose - way of managing multiple docker containers and their configuration as a code
+
+Daily workflow - asciinema
