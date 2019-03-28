@@ -7,7 +7,7 @@
       h2 Jakub Skałecki @jskalc
       h4.u-text-centered Mindspace, 28.03.2019
 
-    slide(enter="fadeIn", leave="fadeOut", steps="2")
+    slide(enter="fadeIn", leave="fadeOut", steps="3")
       h2 About me
       ul(v-if="step === 1")
         li Currently Technical Team Leader at VideoBeat
@@ -16,7 +16,12 @@
         li Blogger (sometimes)
         li Polyglot programmer, technology enthusiast
       h3(v-if="step === 2") Using docker everywhere for 4 years
+      h3(v-if="step === 3") This presentation was created with Docker
 
+
+    slide(enter="fadeIn", leave="fadeOut")
+      .u-text-centered
+        img.presentation-image--solo(src="./assets/docker.svg")
 
     slide(enter="fadeIn", leave="fadeOut", steps="2")
       h2 Docker is a solution
@@ -35,15 +40,18 @@
       h2(v-if="step > 1") Development setup
       h3(v-if="step === 3") How are you dealing with it?
 
-    slide(enter="fadeIn", leave="fadeOut")
+    slide(enter="fadeIn", leave="fadeOut", steps="5")
       h2 Development setup
       p Previous approaches (my experience)
-      ul
+      ul(v-if="step > 1 && step < 5")
         li manual configuration using never written, "tribal knowledge" how to setup things
-        li no separation between projects - different version of database anyone?)
-        li Virtual machines - big overhead
+        li(v-if="step > 2") no separation between projects - different version of database anyone?)
+        li(v-if="step > 3") Virtual machines - big overhead
+      .u-text-centered
+        img.presentation-image(src="./assets/ha-ha-works-on-my-machine.jpg", v-if="step > 4")
+
     slide(enter="fadeIn", leave="fadeOut", steps="2")
-      h2 How docker can help you?
+      h2 How Docker can help you?
       eg-transition.u-text-centered(enter='bounceInLeft', leave='fadeOut', v-if="step === 2")
         h1 What is docker, after all?
 
@@ -56,20 +64,33 @@
       eg-transition.u-text-centered(enter='bounceInLeft', leave='fadeOut', v-if="step > 3")
         blockquote Container is a standard unit of software that packages up code and all its dependencies
 
-    slide(enter="fadeIn", leave="fadeOut")
+    slide(enter="fadeIn", leave="fadeOut", steps="2")
       h2 Hello world
-      cinema-player.u-text-centered(id="902zfwSgmDLLk58JCEoHqZIvr", size="regular")
+      highlight-code.eg-code-block.code-box(lang="bash", v-if="step === 1").
+        # -i and -t are needed to connect input / output to the container
+        docker container run -it python
+
+        # after a while, it will show up
+        Python 3.7.1 (default, Oct 24 2018, 22:35:30)
+        [GCC 6.3.0 20170516] on linux
+        Type "help", "copyright", "credits" or "license" for information.
+        >>>|
+
+      cinema-player.u-text-centered(id="902zfwSgmDLLk58JCEoHqZIvr", size="regular", v-if="step === 2")
 
     slide(enter="fadeIn", leave="fadeOut")
+      .u-text-centered
+        eg-transition.u-text-centered(enter='bounceInLeft', leave='fadeOut')
+          img.presentation-image--solo(src="./assets/magic.gif", width="80%")
+
+
+    slide(enter="fadeIn", leave="fadeOut", steps="5")
       h2 Hello world explanation
       ul
-        li First, docker checks if image called python:alpine exists locally
-        li Since it doesn't, it checks if image exists in remote registry
-        li
-          | Yes,
-          a(href="https://hub.docker.com/_/python/") it exists
-          |, so docker pulls it
-        li And starts a container from python image with a command <pre>print('Hello docker!')</pre>
+        li(v-if="step > 1") First, docker checks if image called python:alpine exists locally
+        li(v-if="step > 2") Since it doesn't, it checks if image exists in remote registry
+        li(v-if="step > 3") Yes, <a href="https://hub.docker.com/_/python/">it exists</a>, so docker pulls it
+        li(v-if="step > 4") And starts a container from python image with a command defined in the image <pre>python</pre>
 
     slide(enter="fadeIn", leave="fadeOut", steps="2")
       h2 Docker hub
@@ -90,14 +111,30 @@
       eg-transition.u-text-centered(enter='bounceInLeft', leave='fadeOut', v-if="step > 3")
         blockquote Image is a class, container is an object
 
-    slide(enter="fadeIn", leave="fadeOut")
+    slide(enter="fadeIn", leave="fadeOut", steps="2")
       h2 Basic workflow demo
-      cinema-player.u-text-centered(id="gULNnYKTNR7efjbe7DST3SPqn", size="regular")
+
+      highlight-code.eg-code-block.code-box(lang="bash", v-if="step === 1").
+        # download the newest version of the image
+        docker image pull postgres
+
+        # run in background, exposing port 5432 to host
+        docker run -d --name database -p 5432:5432 postgres
+
+        # display running containers
+        docker ps
+
+        # start / stop / remove container
+        docker stop / start / rm database
+
+        # remove image
+        docker image rm postgres
+      cinema-player.u-text-centered(id="gULNnYKTNR7efjbe7DST3SPqn", size="regular", v-if="step === 2")
 
     slide(enter="fadeIn", leave="fadeOut", steps="2")
       h2 Dockerfile
       eg-transition.u-text-centered(enter='bounceInLeft', leave='fadeOut', v-if="step > 1")
-        blockquote A step-by-step recipe how to create the image
+        blockquote A step-by-step recipe how to create an image
 
     slide(enter="fadeIn", leave="fadeOut")
       h2 Dockerfile example
@@ -132,6 +169,7 @@
     slide(enter="fadeIn", leave="fadeOut")
       h2 "Real world" example
       highlight-code.eg-code-block.code-box(v-if="step === 1", lang="yaml").
+        # docker-compose.yaml
         version: '2'
         services:
           database:
@@ -159,7 +197,23 @@
 
     slide(enter="fadeIn", leave="fadeOut", steps="2")
       h2 The best part?
-      h2(v-if="step === 2") It's the same for every project!
+      h1(v-if="step === 2") It's the same for every project!
+
+    slide(enter="fadeIn", leave="fadeOut", steps="2")
+      h2 Next steps - production environment benefits
+      ul
+        li Predictable deployment - exact same environment across multiple servers
+        li Ops doesn't have to worry about dependencies, they just "juggle" containers.
+        li Lower costs - you can put multiple isolated containers into one server
+
+    slide(enter="fadeIn", leave="fadeOut")
+      h2 Comparision vs VM
+      .u-text-centered
+        img.presentation-image(src="./assets/docker_vs_vm.jpeg")
+
+    slide(enter="fadeIn", leave="fadeOut")
+      h2 Thank you!
+      h3 Questions?
 
 </template>
 
@@ -225,6 +279,12 @@ export default {
     }
     .eg-code-block {
       font-size: 0.6em;
+    }
+
+    .presentation-image {
+      &--solo {
+        margin: 15% auto;
+      }
     }
   }
   .u-text-centered {
