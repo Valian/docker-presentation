@@ -28,12 +28,14 @@
       eg-transition.u-text-centered(enter='bounceInLeft', leave='fadeOut', v-if="step === 2")
           h1 But what is the problem?
 
-    slide(enter="fadeIn", leave="fadeOut")
-      h2 Definition of the problem
-      ul
-        li Development environment setup & updates
-        li Predictable, repeatable deployment
-        li Server resource sharing
+    slide(enter="fadeIn", leave="fadeOut", steps="4")
+      br
+      eg-transition(v-if="step > 1", enter='bounceInLeft', leave='fadeOut')
+        h3 Development environment setup & updates
+      eg-transition(v-if="step > 2", enter='bounceInLeft', leave='fadeOut')
+        h3 Predictable, repeatable deployment
+      eg-transition(v-if="step > 3", enter='bounceInLeft', leave='fadeOut')
+        h3 Server resource utilization
 
     slide(enter="fadeIn", leave="fadeOut", steps="3")
       h2 Let's focus on the first one
@@ -45,8 +47,8 @@
       p Previous approaches (my experience)
       ul(v-if="step > 1 && step < 5")
         li manual configuration using never written, "tribal knowledge" how to setup things
-        li(v-if="step > 2") no separation between projects - different version of database anyone?)
-        li(v-if="step > 3") Virtual machines - big overhead
+        li(v-if="step > 2") no separation between projects - different version of database anyone?
+        li(v-if="step > 3") Virtual machines are a partial solution, but adds overhead
       .u-text-centered
         img.presentation-image(src="./assets/ha-ha-works-on-my-machine.jpg", v-if="step > 4")
 
@@ -92,16 +94,16 @@
         li(v-if="step > 3") Yes, <a href="https://hub.docker.com/_/python/">it exists</a>, so docker pulls it
         li(v-if="step > 4") And starts a container from python image with a command defined in the image <pre>python</pre>
 
-    slide(enter="fadeIn", leave="fadeOut", steps="2")
+    slide(enter="fadeIn", leave="fadeOut", steps="4")
       h2 Docker hub
       p Biggest collection of publicly-available, actively maintained images
-      ul
+      ul(v-if="step > 1")
         li postgres? Sure!
         li mysql? Of course!
         li redis, rabbitmq, nginx? Also!
         li your favourite language? I bet it's there!
-        li literally <strong>anything</strong>
-      p You can create and upload your own
+        li(v-if="step > 2") literally <strong>anything</strong>
+      p(v-if="step > 3") You can create and upload your own
 
     slide(enter="fadeIn", leave="fadeOut", steps="4")
       h2 Docker image
