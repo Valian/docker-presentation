@@ -1,6 +1,6 @@
 # Python business logic presentation
 
-This repository contains a presentation presented on PyWaw and PyKonik Poland meetups 
+This repository contains a presentation presented on Mindspace Developers Meetup
 
 
 ## Usage

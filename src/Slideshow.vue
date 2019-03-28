@@ -16,7 +16,7 @@
         li Blogger (sometimes)
         li Polyglot programmer, technology enthusiast
       h3(v-if="step === 2") Using docker everywhere for 4 years
-      h3(v-if="step === 3") This presentation was created with Docker
+      h3(v-if="step === 3") This presentation was created with Docker help :)
 
 
     slide(enter="fadeIn", leave="fadeOut")
@@ -32,7 +32,7 @@
       h2 Definition of the problem
       ul
         li Development environment setup & updates
-        li Predicable, repeatable deployment
+        li Predictable, repeatable deployment
         li Server resource sharing
 
     slide(enter="fadeIn", leave="fadeOut", steps="3")
@@ -58,7 +58,7 @@
     slide(enter="fadeIn", leave="fadeOut", steps="4")
       h2 My docker definition
       eg-transition.u-text-centered(enter='bounceInLeft', leave='fadeOut', v-if="step > 1")
-        blockquote Docker is a framework to predictably create and run isolated containers
+        blockquote Docker is a framework to predictably create and run isolated, lightweight containers
 
       h2(v-if="step > 2") And container?
       eg-transition.u-text-centered(enter='bounceInLeft', leave='fadeOut', v-if="step > 3")
